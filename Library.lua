@@ -3299,7 +3299,6 @@ function Library:CreateWindow(...)
             local BoxOuter = Library:Create('Frame', {
                 BackgroundColor3 = Library.BackgroundColor;
                 BorderColor3 = Library.OutlineColor;
-                BorderMode = Enum.BorderMode.Inset;
                 Size = UDim2.new(1, 0, 0, 0);
                 ZIndex = 2;
                 Parent = Info.Side == 1 and LeftSide or RightSide;
@@ -3313,9 +3312,8 @@ function Library:CreateWindow(...)
             local BoxInner = Library:Create('Frame', {
                 BackgroundColor3 = Library.BackgroundColor;
                 BorderColor3 = Color3.new(0, 0, 0);
-                -- BorderMode = Enum.BorderMode.Inset;
-                Size = UDim2.new(1, -2, 1, -2);
-                Position = UDim2.new(0, 1, 0, 1);
+                BorderMode = Enum.BorderMode.Inset;
+                Size = UDim2.new(1, 0, 1, 0);
                 ZIndex = 4;
                 Parent = BoxOuter;
             });
@@ -3390,7 +3388,6 @@ function Library:CreateWindow(...)
                 });
 
                 local Container = Library:Create('Frame', {
-                    BackgroundTransparency = 1;
                     Position = UDim2.new(0, 4, 0, 20);
                     Size = UDim2.new(1, -4, 1, -20);
                     ZIndex = 1;
@@ -3414,8 +3411,6 @@ function Library:CreateWindow(...)
 
                     Button.BackgroundColor3 = Library.BackgroundColor;
                     Library.RegistryMap[Button].Properties.BackgroundColor3 = 'BackgroundColor';
-
-                    Tab:Resize();
                 end;
 
                 function Tab:Hide()
@@ -3430,7 +3425,7 @@ function Library:CreateWindow(...)
                     local TabCount = 0;
 
                     for _, Tab in next, Tabbox.Tabs do
-                        TabCount = TabCount + 1;
+                        TabCount = TabCount +  1;
                     end;
 
                     for _, Button in next, TabboxButtons:GetChildren() do
@@ -3439,25 +3434,22 @@ function Library:CreateWindow(...)
                         end;
                     end;
 
-                    if (not Container.Visible) then
-                        return;
-                    end;
-
                     local Size = 0;
 
                     for _, Element in next, Tab.Container:GetChildren() do
-                        if (not Element:IsA('UIListLayout')) and Element.Visible then
+                        if not Element:IsA('UIListLayout') then
                             Size = Size + Element.Size.Y.Offset;
                         end;
                     end;
 
-                    BoxOuter.Size = UDim2.new(1, 0, 0, 20 + Size + 2 + 2);
+                    if BoxOuter.Size.Y.Offset < 20 + Size + 2 then
+                        BoxOuter.Size = UDim2.new(1, 0, 0, 20 + Size + 2);
+                    end;
                 end;
 
                 Button.InputBegan:Connect(function(Input)
                     if Input.UserInputType == Enum.UserInputType.MouseButton1 and not Library:MouseIsOverOpenedFrame() then
                         Tab:Show();
-                        Tab:Resize();
                     end;
                 end);
 
@@ -3469,7 +3461,6 @@ function Library:CreateWindow(...)
                 Tab:AddBlank(3);
                 Tab:Resize();
 
-                -- Show first tab (number is 2 cus of the UIListLayout that also sits in that instance)
                 if #TabboxButtons:GetChildren() == 2 then
                     Tab:Show();
                 end;
@@ -3514,103 +3505,31 @@ function Library:CreateWindow(...)
         Parent = ScreenGui;
     });
 
-    local TransparencyCache = {};
-    local Toggled = false;
-    local Fading = false;
+    function Library.Toggle()
+        Outer.Visible = not Outer.Visible;
+        ModalElement.Modal = Outer.Visible;
 
-    function Library:Toggle()
-        if Fading then
-            return;
+        local oIcon = Mouse.Icon;
+        local State = InputService.MouseIconEnabled;
+
+        local Cursor = Drawing.new('Triangle');
+        Cursor.Thickness = 1;
+        Cursor.Filled = true;
+
+        while Outer.Visible and ScreenGui.Parent do
+            local mPos = InputService:GetMouseLocation()
+
+            Cursor.Color = Library.AccentColor;
+            Cursor.PointA = Vector2.new(mPos.X, mPos.Y);
+            Cursor.PointB = Vector2.new(mPos.X, mPos.Y) + Vector2.new(6, 14);
+            Cursor.PointC = Vector2.new(mPos.X, mPos.Y) + Vector2.new(-6, 14);
+
+            Cursor.Visible = not InputService.MouseIconEnabled;
+
+            RenderStepped:Wait();
         end;
 
-        local FadeTime = Config.MenuFadeTime;
-        Fading = true;
-        Toggled = (not Toggled);
-        ModalElement.Modal = Toggled;
-
-        if Toggled then
-            -- A bit scuffed, but if we're going from not toggled -> toggled we want to show the frame immediately so that the fade is visible.
-            Outer.Visible = true;
-
-            task.spawn(function()
-                -- TODO: add cursor fade?
-                local State = InputService.MouseIconEnabled;
-
-                local Cursor = Drawing.new('Triangle');
-                Cursor.Thickness = 1;
-                Cursor.Filled = true;
-                Cursor.Visible = true;
-
-                local CursorOutline = Drawing.new('Triangle');
-                CursorOutline.Thickness = 1;
-                CursorOutline.Filled = false;
-                CursorOutline.Color = Color3.new(0, 0, 0);
-                CursorOutline.Visible = true;
-
-                while Toggled and ScreenGui.Parent do
-                    InputService.MouseIconEnabled = false;
-
-                    local mPos = InputService:GetMouseLocation();
-
-                    Cursor.Color = Library.AccentColor;
-
-                    Cursor.PointA = Vector2.new(mPos.X, mPos.Y);
-                    Cursor.PointB = Vector2.new(mPos.X + 16, mPos.Y + 6);
-                    Cursor.PointC = Vector2.new(mPos.X + 6, mPos.Y + 16);
-
-                    CursorOutline.PointA = Cursor.PointA;
-                    CursorOutline.PointB = Cursor.PointB;
-                    CursorOutline.PointC = Cursor.PointC;
-
-                    RenderStepped:Wait();
-                end;
-
-                InputService.MouseIconEnabled = State;
-
-                Cursor:Remove();
-                CursorOutline:Remove();
-            end);
-        end;
-
-        for _, Desc in next, Outer:GetDescendants() do
-            local Properties = {};
-
-            if Desc:IsA('ImageLabel') then
-                table.insert(Properties, 'ImageTransparency');
-                table.insert(Properties, 'BackgroundTransparency');
-            elseif Desc:IsA('TextLabel') or Desc:IsA('TextBox') then
-                table.insert(Properties, 'TextTransparency');
-            elseif Desc:IsA('Frame') or Desc:IsA('ScrollingFrame') then
-                table.insert(Properties, 'BackgroundTransparency');
-            elseif Desc:IsA('UIStroke') then
-                table.insert(Properties, 'Transparency');
-            end;
-
-            local Cache = TransparencyCache[Desc];
-
-            if (not Cache) then
-                Cache = {};
-                TransparencyCache[Desc] = Cache;
-            end;
-
-            for _, Prop in next, Properties do
-                if not Cache[Prop] then
-                    Cache[Prop] = Desc[Prop];
-                end;
-
-                if Cache[Prop] == 1 then
-                    continue;
-                end;
-
-                TweenService:Create(Desc, TweenInfo.new(FadeTime, Enum.EasingStyle.Linear), { [Prop] = Toggled and Cache[Prop] or 1 }):Play();
-            end;
-        end;
-
-        task.wait(FadeTime);
-
-        Outer.Visible = Toggled;
-
-        Fading = false;
+        Cursor:Remove();
     end
 
     function Library.Mobile()
@@ -3654,7 +3573,6 @@ function Library:CreateWindow(...)
 
     return Window;
 end;
-
 local function OnPlayerChange()
     local PlayerList = GetPlayersString();
 
