@@ -71,16 +71,16 @@ table.insert(Library.Signals, RenderStepped:Connect(function(Delta)
 end))
 
 local function GetFolder(FileName)
-    if not isfolder("SylveonHub/settings") then 
-        makefolder("SylveonHub/settings")
+    if not isfolder("BabyUnknown/settings") then 
+        makefolder("BabyUnknown/settings")
     end
-    if not isfile("SylveonHub/settings/" .. FileName .. " - " .. LocalPlayer.UserId .. ".json") then 
-        writefile("SylveonHub/settings/" .. FileName .. " - " .. LocalPlayer.UserId .. ".json", tostring(HttpService:JSONEncode({})))
+    if not isfile("BabyUnknown/settings/" .. FileName .. " - " .. LocalPlayer.UserId .. ".json") then 
+        writefile("BabyUnknown/settings/" .. FileName .. " - " .. LocalPlayer.UserId .. ".json", tostring(HttpService:JSONEncode({})))
     end
 end
 
 local function GetSetting(Idx, FileName)
-    local content = readfile("SylveonHub/settings/" .. FileName .. " - " .. LocalPlayer.UserId .. ".json")
+    local content = readfile("BabyUnknown/settings/" .. FileName .. " - " .. LocalPlayer.UserId .. ".json")
     local parsed = HttpService:JSONDecode(content)
     if parsed then 
         return parsed[Idx]
@@ -88,10 +88,10 @@ local function GetSetting(Idx, FileName)
 end
 
 local function AddSetting(Idx, value, FileName)
-    local content = readfile("SylveonHub/settings/" .. FileName .. " - " .. LocalPlayer.UserId .. ".json")
+    local content = readfile("BabyUnknown/settings/" .. FileName .. " - " .. LocalPlayer.UserId .. ".json")
     local parsed = HttpService:JSONDecode(content)
     parsed[Idx] = value 
-    writefile("SylveonHub/settings/" .. FileName .. " - " .. LocalPlayer.UserId .. ".json", tostring(HttpService:JSONEncode(parsed)))
+    writefile("BabyUnknown/settings/" .. FileName .. " - " .. LocalPlayer.UserId .. ".json", tostring(HttpService:JSONEncode(parsed)))
 end
 
 local function GetPlayersString()
