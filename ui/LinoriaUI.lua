@@ -2971,7 +2971,6 @@ function Library:CreateWindow(...)
         Visible = false;
         ZIndex = 1;
         Parent = ScreenGui;
-        Corner = UDim.new(0, 5); -- Закругленные углы для фрейма Outer
     });
 
     Library:MakeDraggable(Outer, 25);
@@ -2984,7 +2983,6 @@ function Library:CreateWindow(...)
         Size = UDim2.new(1, -2, 1, -2);
         ZIndex = 1;
         Parent = Outer;
-        Corner = UDim.new(0, 5); -- Закругленные углы для фрейма Inner
     });
 
     Library:AddToRegistry(Inner, {
@@ -3197,7 +3195,6 @@ function Library:CreateWindow(...)
                 Size = UDim2.new(1, 0, 0, 507 + 2);
                 ZIndex = 2;
                 Parent = Info.Side == 1 and LeftSide or RightSide;
-                Corner = UDim.new(0, 5); -- Закругленные углы для фрейма BoxOuter
             });
 
             Library:AddToRegistry(BoxOuter, {
@@ -3208,11 +3205,11 @@ function Library:CreateWindow(...)
             local BoxInner = Library:Create('Frame', {
                 BackgroundColor3 = Library.BackgroundColor;
                 BorderColor3 = Color3.new(0, 0, 0);
+                -- BorderMode = Enum.BorderMode.Inset;
                 Size = UDim2.new(1, -2, 1, -2);
                 Position = UDim2.new(0, 1, 0, 1);
                 ZIndex = 4;
                 Parent = BoxOuter;
-                Corner = UDim.new(0, 5); -- Закругленные углы для фрейма BoxInner
             });
 
             Library:AddToRegistry(BoxInner, {
