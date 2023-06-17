@@ -13,7 +13,7 @@ local Window = Library:CreateWindow({
     -- Position and Size are also valid options here
     -- but you do not need to define them unless you are changing them :)
 
-    Title = 'Example menu',
+    Title = 'UnknownHub | Premium',
     Center = true, 
     AutoShow = true,
 })
@@ -217,6 +217,7 @@ end)
 
 Options.ColorPicker:SetValueRGB(Color3.fromRGB(0, 255, 140))
 
+--[[
 LeftGroupBox:AddLabel('Keybind'):AddKeyPicker('KeyPicker', {
     -- SyncToggleState only works with toggles. 
     -- It allows you to make a keybind which has its state synced with its parent toggle
@@ -256,6 +257,7 @@ task.spawn(function()
 end)
 
 Options.KeyPicker:SetValue({ 'MB2', 'Toggle' }) -- Sets keybind to MB2, mode to Hold
+]]
 
 -- Library functions
 -- Sets the watermark visibility
@@ -299,8 +301,8 @@ SaveManager:SetIgnoreIndexes({ 'MenuKeybind' })
 -- use case for doing it this way: 
 -- a script hub could have themes in a global folder
 -- and game configs in a separate folder per game
-ThemeManager:SetFolder('MyScriptHub')
-SaveManager:SetFolder('MyScriptHub/specific-game')
+ThemeManager:SetFolder('UnknownHub')
+SaveManager:SetFolder('UnknownHub/lua')
 
 -- Builds our config menu on the right side of our tab
 SaveManager:BuildConfigSection(Tabs['UI Settings']) 
