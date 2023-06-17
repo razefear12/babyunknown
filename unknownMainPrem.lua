@@ -264,9 +264,10 @@ Options.KeyPicker:SetValue({ 'MB2', 'Toggle' }) -- Sets keybind to MB2, mode to 
 Library:SetWatermarkVisibility(true)
 
 -- Sets the watermark text
-Library:SetWatermark('This is a really long watermark to text the resizing')
+Library:SetWatermark('UnknownHub | Premium | ' .. os.date('%Y-%m-%d %H:%M:%S'))
 
-Library.KeybindFrame.Visible = true; -- todo: add a function for this
+Library.KeybindFrame.Visible = false; -- todo: add a function for this
+
 
 Library:OnUnload(function()
     print('Unloaded!')
