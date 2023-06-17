@@ -1,11 +1,15 @@
 -- New example script written by wally
 -- You can suggest changes with a pull request or something
+local wanted = {"Kamado","Agatsuma","Rengoku","Uzui","Tomioka","Tokito","Hashibira","Soyama"}
 
 local repo = 'https://raw.githubusercontent.com/razefear12/babyunknown/main/'
 
 local Library = loadstring(game:HttpGet(repo .. 'ui/LinoriaUI.lua'))()
 local ThemeManager = loadstring(game:HttpGet(repo .. 'ui/ThemeManager.lua'))()
 local SaveManager = loadstring(game:HttpGet(repo .. 'ui/SaveManager.lua'))()
+
+local isNoclipEnabled = false -- Флаг, указывающий, включен ли режим noclip
+local isAntiFallEnabled = false -- Флаг, указывающий, включен ли режим anti fall
 
 local Window = Library:CreateWindow({
     -- Set Center to true if you want the menu to appear in the center
@@ -43,10 +47,13 @@ local Tab2 = TabBox:AddTab('Tab 2')
 -- Groupbox:AddToggle
 -- Arguments: Index, Options
 LeftGroupBox:AddToggle('MyToggle', {
+    
     Text = 'This is a toggle',
     Default = true, -- Default value (true / false)
     Tooltip = 'This is a tooltip', -- Information shown when you hover over the toggle
 })
+
+
 
 
 -- Fetching a toggle object for later use:
@@ -266,7 +273,7 @@ Library:SetWatermarkVisibility(true)
 -- Sets the watermark text
 Library:SetWatermark('This is a really long watermark to text the resizing')
 
-Library.KeybindFrame.Visible = true; -- todo: add a function for this
+Library.KeybindFrame.Visible = false; -- todo: add a function for this
 
 Library:OnUnload(function()
     print('Unloaded!')
