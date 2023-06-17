@@ -3,9 +3,9 @@
 
 local repo = 'https://raw.githubusercontent.com/razefear12/babyunknown/main/'
 
-local Library = loadstring(game:HttpGet(repo .. 'LinoriaUI.lua'))()
-local ThemeManager = loadstring(game:HttpGet(repo .. 'ThemeManager.lua'))()
-local SaveManager = loadstring(game:HttpGet(repo .. 'SaveManager.lua'))()
+local Library = loadstring(game:HttpGet(repo .. 'ui/Library.lua'))()
+local ThemeManager = loadstring(game:HttpGet(repo .. 'ui/ThemeManager.lua'))()
+local SaveManager = loadstring(game:HttpGet(repo .. 'ui/SaveManager.lua'))()
 
 local Window = Library:CreateWindow({
     -- Set Center to true if you want the menu to appear in the center
