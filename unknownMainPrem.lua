@@ -263,28 +263,10 @@ Options.KeyPicker:SetValue({ 'MB2', 'Toggle' }) -- Sets keybind to MB2, mode to 
 -- Sets the watermark visibility
 Library:SetWatermarkVisibility(true)
 
--- Variables to store the start time
-local startTime = os.time()
-local watermarkText = 'Script started '
+-- Sets the watermark text
+Library:SetWatermark('This is a really long watermark to text the resizing')
 
--- Function to update the watermark text with the elapsed time
-local function updateWatermark()
-    local elapsedTime = os.time() - startTime
-    Library:SetWatermarkVisibility(true)
-    Library:SetWatermark('UnknownHub | Premium | ' .. watermarkText .. elapsedTime .. ' seconds ago')
-end
-
--- Call the updateWatermark function initially to set the watermark
-updateWatermark()
-
--- Call the updateWatermark function every second to update the watermark dynamically
-while true do
-    wait(1)
-    updateWatermark()
-end
-
-Library.KeybindFrame.Visible = false; -- todo: add a function for this
-
+Library.KeybindFrame.Visible = true; -- todo: add a function for this
 
 Library:OnUnload(function()
     print('Unloaded!')
