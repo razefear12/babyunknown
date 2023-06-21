@@ -377,10 +377,35 @@ function Library:UpdateColorsUsingRegistry()
     end;
 end;
 
+function Library.Mobile()
+    MainSectionOuter.Visible = not MainSectionOuter.Visible
+
+    if MainSectionOuter.Visible then
+        game:GetService("TweenService"):Create(
+            Outer,
+            TweenInfo.new(.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+            {Size = Config.Size}
+        ):Play()
+    else
+        game:GetService("TweenService"):Create(
+            Outer,
+            TweenInfo.new(.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+            {Size = UDim2.fromOffset(Config.Size.X.Offset, 30)}
+        ):Play()
+    end
+end
+
 function Library:GiveSignal(Signal)
     -- Only used for signals not attached to library instances, as those should be cleaned up on object destruction by Roblox
     table.insert(Library.Signals, Signal)
 end
+
+MinimizeFrame.InputBegan:Connect(function(Input)
+    if Input.UserInputType == Enum.UserInputType.MouseButton1 then
+        task.spawn(Library.Mobile)
+    end
+end)
+
 
 function Library:Unload()
     -- Unload all of the signals
@@ -2995,6 +3020,17 @@ function Library:CreateWindow(...)
         Size = UDim2.new(0, 0, 0, 25);
         Text = Config.Title or '';
         TextXAlignment = Enum.TextXAlignment.Left;
+        ZIndex = 1;
+        Parent = Inner;
+    });
+
+    local MinimizeFrame = Library:Create('ImageButton', {
+        BackgroundTransparency = 1;
+        Image = "rbxassetid://3926307971";
+        ImageRectOffset = Vector2.new(884, 284);
+        ImageRectSize = Vector2.new(36, 36);
+        Position = UDim2.new(0.94, 0, 0, 0);
+        Size = UDim2.new(0, 25, 0, 25);
         ZIndex = 1;
         Parent = Inner;
     });
