@@ -377,44 +377,10 @@ function Library:UpdateColorsUsingRegistry()
     end;
 end;
 
-function Library.Mobile()
-    MainSectionOuter.Visible = not MainSectionOuter.Visible
-
-    if MainSectionOuter.Visible then
-        game:GetService("TweenService"):Create(
-            Outer,
-            TweenInfo.new(.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
-            {Size = Config.Size}
-        ):Play()
-    else
-        game:GetService("TweenService"):Create(
-            Outer,
-            TweenInfo.new(.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
-            {Size = UDim2.fromOffset(Config.Size.X.Offset, 30)}
-        ):Play()
-    end
-end
-
 function Library:GiveSignal(Signal)
     -- Only used for signals not attached to library instances, as those should be cleaned up on object destruction by Roblox
     table.insert(Library.Signals, Signal)
 end
-
-Library:GiveSignal(InputService.InputBegan:Connect(function(Input, Processed)
-    if type(Library.ToggleKeybind) == 'table' and Library.ToggleKeybind.Type == 'KeyPicker' then
-        if Input.UserInputType == Enum.UserInputType.Keyboard and Input.KeyCode.Name == Library.ToggleKeybind.Value then
-            task.spawn(Library.Toggle)
-        end
-    elseif Input.KeyCode == Enum.KeyCode.RightControl or (Input.KeyCode == Enum.KeyCode.RightShift and (not Processed)) then
-        task.spawn(Library.Toggle)
-    end
-end))
-
-MinimizeFrame.InputBegan:Connect(function(Input)
-    if Input.UserInputType == Enum.UserInputType.MouseButton1 then
-        task.spawn(Library.Mobile)
-    end
-end)
 
 
 function Library:Unload()
@@ -3652,6 +3618,24 @@ function Library:CreateWindow(...)
         Fading = false;
     end
 
+    function Library.Mobile()
+        MainSectionOuter.Visible = not MainSectionOuter.Visible
+
+        if MainSectionOuter.Visible then
+            game:GetService("TweenService"):Create(
+                Outer,
+                TweenInfo.new(.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+                {Size = Config.Size}
+            ):Play()
+        else
+            game:GetService("TweenService"):Create(
+                Outer,
+                TweenInfo.new(.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+                {Size = UDim2.fromOffset(Config.Size.X.Offset, 30)}
+            ):Play()
+        end
+    end
+
     Library:GiveSignal(InputService.InputBegan:Connect(function(Input, Processed)
         if type(Library.ToggleKeybind) == 'table' and Library.ToggleKeybind.Type == 'KeyPicker' then
             if Input.UserInputType == Enum.UserInputType.Keyboard and Input.KeyCode.Name == Library.ToggleKeybind.Value then
@@ -3661,6 +3645,12 @@ function Library:CreateWindow(...)
             task.spawn(Library.Toggle)
         end
     end))
+
+    MinimizeFrame.InputBegan:Connect(function(Input)
+        if Input.UserInputType == Enum.UserInputType.MouseButton1 then
+            task.spawn(Library.Mobile)
+        end
+    end)
 
     if Config.AutoShow then task.spawn(Library.Toggle) end
 
