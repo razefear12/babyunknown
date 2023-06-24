@@ -1651,7 +1651,7 @@ do
             Size = UDim2.new(1, 0, 0, 15);
             TextSize = 14;
             Text = Info.Text;
-            TextXAlignment = Enum.TextXAlignment.Left;
+            TextXAlignment = Enum.TextXAlignment.Center;
             ZIndex = 5;
             Parent = Container;
         });

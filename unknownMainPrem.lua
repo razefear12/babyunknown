@@ -17,7 +17,7 @@ local Window = Library:CreateWindow({
     -- Position and Size are also valid options here
     -- but you do not need to define them unless you are changing them :)
 
-    Title = 'UnknownHub | Premium',
+    Title = 'UnknownHub | Project Slayers 👺 (Premium)',
     Center = true, 
     AutoShow = true,
 })
@@ -31,7 +31,8 @@ local Tabs = {
 
 -- Groupbox and Tabbox inherit the same functions
 -- except Tabboxes you have to call the functions on a tab (Tabbox:AddTab(name))
-local LeftGroupBox = Tabs.Main:AddLeftGroupbox('Groupbox')
+local LeftGroupBox = Tabs.Main:AddLeftGroupbox('💪 | Player Buffs | 💪')
+
 
 -- Tabboxes are a tiny bit different, but here's a basic example:
 --[[
@@ -46,31 +47,344 @@ local Tab2 = TabBox:AddTab('Tab 2')
 
 -- Groupbox:AddToggle
 -- Arguments: Index, Options
-LeftGroupBox:AddToggle('MyToggle', {
-    
-    Text = 'This is a toggle',
-    Default = true, -- Default value (true / false)
-    Tooltip = 'This is a tooltip', -- Information shown when you hover over the toggle
+LeftGroupBox:AddToggle('Misc', {
+    Text = 'Auto Loot Chest',
+    Default = false, -- Default value (true / false)
 })
 
 
+Toggles.Misc:OnChanged(function(value)
+    getgenv().AutoCollectChest = value
+end)
 
 
--- Fetching a toggle object for later use:
--- Toggles.MyToggle.Value
+-- This should print to the console: "My toggle state changed! New value: false"
+Toggles.Misc:SetValue(false)
 
--- Toggles is a table added to getgenv() by the library
--- You index Toggles with the specified index, in this case it is 'MyToggle'
--- To get the state of the toggle you do toggle.Value
+LeftGroupBox:AddToggle('Misc', {
+    Text = 'Inf Stamina',
+    Default = false, -- Default value (true / false)
+})
 
--- Calls the passed function when the toggle is updated
-Toggles.MyToggle:OnChanged(function()
-    -- here we get our toggle object & then get its value
-    print('MyToggle changed to:', Toggles.MyToggle.Value)
+Toggles.Misc:OnChanged(function()
+    game:GetService("Players").LocalPlayer.PlayerScripts.Small_Scripts.Gameplay.Stamina.Disabled = true
+    wait(0.5)
+    game:GetService("Players").LocalPlayer.PlayerScripts.Small_Scripts.Gameplay.Stamina.Disabled = false
+    wait(0.5)
+    game:GetService("Players").LocalPlayer.PlayerScripts.Small_Scripts.Gameplay.Stamina.Disabled = true
+end)
+
+
+-- This should print to the console: "My toggle state changed! New value: false"
+Toggles.Misc:SetValue(false)
+
+LeftGroupBox:AddToggle('Misc', {
+    Text = 'Inf Breathing',
+    Default = false, -- Default value (true / false)
+})
+
+Toggles.Misc:OnChanged(function()
+    game:GetService("Players").LocalPlayer.PlayerScripts.Small_Scripts.Gameplay.Breathing.Disabled = true
+    wait(0.5)
+    game:GetService("Players").LocalPlayer.PlayerScripts.Small_Scripts.Gameplay.Breathing.Disabled = false
+    wait(0.5)
+    game:GetService("Players").LocalPlayer.PlayerScripts.Small_Scripts.Gameplay.Breathing.Disabled = true
 end)
 
 -- This should print to the console: "My toggle state changed! New value: false"
-Toggles.MyToggle:SetValue(false)
+Toggles.Misc:SetValue(false)
+
+LeftGroupBox:AddToggle('Misc', {
+    Text = 'Anti SunDamage (Only Demon)',
+    Default = false, -- Default value (true / false)
+})
+
+Toggles.Misc:OnChanged(function()
+    game:GetService("Players").LocalPlayer.PlayerScripts.Small_Scripts.Gameplay.Sun_Damage.Disabled = true
+end)
+
+-- This should print to the console: "My toggle state changed! New value: false"
+Toggles.Misc:SetValue(false)
+
+LeftGroupBox:AddToggle('Misc', {
+    Text = 'Kamado Heal (Only Demon)',
+    Default = false, -- Default value (true / false)
+})
+
+Toggles.Misc:OnChanged(function(t)
+    kamadonhealon = t
+    if not t then
+        kamadonhealon = false
+        kamadonhealoff = true
+    end
+    game:GetService("ReplicatedStorage").Remotes.heal_tang123asd:FireServer(kamadonhealon)
+end)
+
+-- This should print to the console: "My toggle state changed! New value: false"
+Toggles.Misc:SetValue(false)
+
+LeftGroupBox:AddToggle('Misc', {
+    Text = 'Dmg Buff (All Race)',
+    Default = false, -- Default value (true / false)
+})
+
+local wardrumsbuffon = true
+local wardrumsbuffoff = false
+
+Toggles.Misc:OnChanged(function(t)
+    wardrumsbuffon = t
+    if not t then
+        wardrumsbuffon = false
+        wardrumsbuffoff = true
+    end
+    while wardrumsbuffon do
+    game:GetService("ReplicatedStorage").Remotes.war_Drums_remote:FireServer(wardrumsbuffon)
+    wait(2)
+    end
+end)
+
+-- This should print to the console: "My toggle state changed! New value: false"
+Toggles.Misc:SetValue(false)
+
+
+local godmodeakazabda1 = "skil_ting_asd"
+local godmodeakazabda2 = game:GetService("Players").LocalPlayer
+local godmodeakazabda3 = "akaza_bda_compass_needle"
+local godmodeakazabda4 = 1
+local isGodModeEnabled = false
+local godModeLoop
+
+
+local function startGodMode()
+    if isGodModeEnabled then
+        game:GetService("ReplicatedStorage").Remotes.To_Server.Handle_Initiate_S:FireServer(godmodeakazabda1, godmodeakazabda2, godmodeakazabda3, godmodeakazabda4)
+        wait(1.5)
+        startGodMode()
+    end
+end
+
+LeftGroupBox:AddToggle('Misc', {
+    Text = 'Kamado Heal (Only Demon)',
+    Default = false, -- Default value (true / false)
+})
+
+Toggles.Misc:OnChanged(function(t)
+    isGodModeEnabled = t
+    if isGodModeEnabled then
+        startGodMode()
+    elseif godModeLoop then
+        godModeLoop:Disconnect()
+    end
+end)
+
+-- This should print to the console: "My toggle state changed! New value: false"
+Toggles.Misc:SetValue(false)
+
+
+-- Groupbox and Tabbox inherit the same functions
+-- except Tabboxes you have to call the functions on a tab (Tabbox:AddTab(name))
+local LeftGroupBox = Tabs.Main:AddLeftGroupbox('🤖 | Auto Farm | 🤖')
+
+
+-- Tabboxes are a tiny bit different, but here's a basic example:
+--[[
+
+local TabBox = Tabs.Main:AddLeftTabbox() -- Add Tabbox on left side
+
+local Tab1 = TabBox:AddTab('Tab 1')
+local Tab2 = TabBox:AddTab('Tab 2')
+
+-- You can now call AddToggle, etc on the tabs you added to the Tabbox
+]]
+
+-- Groupbox:AddToggle
+-- Arguments: Index, Options
+LeftGroupBox:AddToggle('Farming', {
+    Text = 'Auto All Bosses',
+    Default = false, -- Default value (true / false)
+})
+
+Toggles.Farming:OnChanged(function(value)
+    getgenv().AllBosses = value
+end)
+
+-- This should print to the console: "My toggle state changed! New value: false"
+Toggles.Farming:SetValue(false)
+
+
+        --Collect Chest
+
+        spawn(function()
+            while task.wait() do
+            if AutoCollectChest then
+            for _, v in pairs(game:GetService("Workspace").Debree:GetChildren()) do
+            if v.Name == "Loot_Chest" then
+            for _, c in pairs(v:FindFirstChild("Drops"):GetChildren()) do
+            if game:GetService("ReplicatedStorage")["Player_Data"][game.Players.LocalPlayer.Name].Inventory.Items:FindFirstChild(c.Name) then
+            local args = { [1] = c.Name }
+            v["Add_To_Inventory"]:InvokeServer(unpack(args))
+            delay(0.5, function() c:Destroy() end)
+            else
+            local args = { [1] = c.Name }
+            v["Add_To_Inventory"]:InvokeServer(unpack(args))
+            delay(0.5, function() c:Destroy() end)
+            end
+            end
+            end
+            end
+            end
+            end
+            end)
+
+
+ -- Farm Method
+spawn(function()
+    while wait() do
+        pcall(function()
+            SkillActive = AutoUseSkills and (FarmBoss and NearestMobs) or AutoUseSkills and (FarmQuest and NearestMobs) or AutoUseSkills and (FarmMob and NearestMobs) or AutoUseSkills and (AllBosses and NearestMobs)
+            if FarmMethod == "Above" then
+                FarmModes = CFrame.new(0,getgenv().Distance,0) * CFrame.Angles(math.rad(-90),0,0) 
+            elseif FarmMethod == "Below" then
+                FarmModes = CFrame.new(0,-getgenv().Distance,0) * CFrame.Angles(math.rad(90),0,0)
+            elseif FarmMethod == "Behind" then
+                FarmModes = CFrame.new(0,0,getgenv().Distance)
+            end
+            for i,v in pairs(LP.PlayerGui.MainGuis.Items.Scroll:GetChildren()) do
+                Insert = true
+                if v.ClassName == "Frame" and v.Name ~= "Health Elixir" and v.Name ~= "Health Regen Elixir" and v.Name ~= "Stamina Elixir" and v.Name ~= "Bandage" then
+                    for i,v2 in pairs(invTable) do if v2 == v.Name then Insert = false end end
+                    if Insert == true then table.insert(invTable, v.Name) end
+                end
+            end
+        end)
+    end
+end)
+
+-- No Clip
+spawn(function()
+    game:GetService("RunService").Stepped:Connect(function()
+        if getgenv().AllBosses or TPtoVillage or TPtoTrainer or getgenv().GotoMuzan or FarmBoss then
+            for _, v in pairs(game:GetService("Players").LocalPlayer.Character:GetDescendants()) do
+                if v:IsA("BasePart") then
+                    v.CanCollide = false    
+                end
+                if v:IsA("Humanoid") then
+                    v:ChangeState(11)
+                end
+            end
+        end
+    end)
+end)
+
+local BossesTable = {"Slasher", "Nomay Bandit Boss", "Rengoku", "Inosuke","Renpeke","Muichiro Tokito","Enme","Swampy","Akeza"}
+local BossCFTable = {
+    ["Nomay Bandit Boss"] = CFrame.new(3519, 673, -1898),
+    ["Slasher"] = CFrame.new(950, 487, -1353),
+    Rengoku = CFrame.new(3651, 673, -345),
+    Inosuke = CFrame.new(1618, 300, -417),
+    Akaza = CFrame.new(1970, 556, -142),
+    Renpeke = CFrame.new(-1193, 601, -558),
+    ["Muichiro Tokito"] = CFrame.new(4431, 673, -440),
+    Enme = CFrame.new(1577, 483, -681),
+    Swampy = CFrame.new(-1301, 601, -283),
+}
+
+local LP = game.Players.LocalPlayer
+
+local function GetHuman()
+    local humanoid = LP.Character
+    humanoid = humanoid and (humanoid:FindFirstChild("Humanoid") or humanoid:FindFirstChildWhichIsA("Humanoid"))
+    return humanoid or workspace.CurrentCamera.CameraSubject
+end
+
+local GramxProjectFloat = tostring(math.random(0, 100000))
+local TweenFloatVelocity = Vector3.new(0,0,0)
+
+function CreateTweenFloat()
+    local BV = LP.Character.HumanoidRootPart:FindFirstChild(GramxProjectFloat) or Instance.new("BodyVelocity")
+    BV.Parent = LP.Character.HumanoidRootPart
+    BV.Name = GramxProjectFloat
+    BV.MaxForce = Vector3.new(100000, 100000, 100000)
+    BV.Velocity = TweenFloatVelocity
+end
+
+local function GetDistance(Endpoint)
+    if typeof(Endpoint) == "Instance" or typeof(Endpoint) == "CFrame" then
+        Endpoint = Vector3.new(Endpoint.Position.X, LP.Character.HumanoidRootPart.Position.Y, Endpoint.Position.Z)
+    end
+    local Magnitude = (Endpoint - LP.Character.HumanoidRootPart.Position).Magnitude
+    return Magnitude
+end
+
+local function Tween(Endpoint)
+    if typeof(Endpoint) == "Instance" then
+        Endpoint = Endpoint.CFrame
+    end
+    local TweenFunc = {}
+    local Distance = GetDistance(Endpoint)
+    local TweenInfo = game:GetService("TweenService"):Create(LP.Character.HumanoidRootPart, TweenInfo.new(Distance/getgenv().tweenspeed, Enum.EasingStyle.Linear), {CFrame = Endpoint * CFrame.fromAxisAngle(Vector3.new(1,0,0), math.rad(0))})
+    TweenInfo:Play()
+    function TweenFunc:Cancel()
+        TweenInfo:Cancel()
+        return false
+    end
+    if Distance <= 100 then
+        LP.Character.HumanoidRootPart.CFrame = Endpoint
+        TweenInfo:Cancel()
+        return false
+    end
+    return TweenFunc
+end
+
+local antifall3
+
+-- AutoFarm All Bosses
+spawn(function()
+    while wait() do
+        pcall(function()
+            if getgenv().AllBosses then
+                if not LP.Character.HumanoidRootPart:FindFirstChild("BodyVelocity") then
+                    antifall3 = Instance.new("BodyVelocity", LP.Character.HumanoidRootPart)
+                    antifall3.Velocity = Vector3.new(0, 0, 0)
+                    antifall3.MaxForce = Vector3.new(9e9, 9e9, 9e9)
+                elseif LP.Character.HumanoidRootPart:FindFirstChild("BodyVelocity") then
+                    for i,v in pairs(game:GetService("Workspace").Mobs:GetDescendants()) do
+                        if table.find(BossesTable, v.Name) and v:IsA("Model") and v:FindFirstChild("Humanoid") then
+                            if v.Humanoid.Health > 0 then
+                                repeat wait()
+                                    local bossCFrame = BossCFTable[v.Name] -- Get the boss's CFrame from the BossCFTable
+                                    if GetDistance(bossCFrame) < 25 and GetDistance(bossCFrame) < 150 then
+                                        if TweenFa then
+                                            TweenFa:Cancel()
+                                            wait(0.1)
+                                        end
+                                        LP.Character.HumanoidRootPart.CFrame = bossCFrame
+                                    else
+                                        TweenFa = Tween(bossCFrame)
+                                    end
+                                    if v.Humanoid.Health > 0 and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and GetDistance(bossCFrame) < 10 then
+                                        NearestMobs = true
+                                    elseif v.Humanoid.Health <= 0 or not v:FindFirstChild("Humanoid") and GetDistance(bossCFrame) > 10 then
+                                        NearestMobs = false
+                                    end
+                                until not getgenv().AllBosses or not v.Parent or v.Humanoid.Health <= 0 or not v:IsDescendantOf(workspace)
+                                NearestMobs = false
+                            end
+                        end
+                    end
+                end
+            else
+                antifall3:Destroy()
+            end
+            if getgenv().AllBosses == false then
+                if TweenFa then
+                    TweenFa:Cancel()
+                end
+            end
+        end)
+    end
+end)
+
 
 -- Groupbox:AddButton
 -- Arguments: Text, Callback
