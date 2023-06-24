@@ -164,7 +164,7 @@ local function startGodMode()
 end
 
 LeftGroupBox:AddToggle('Misc', {
-    Text = 'Kamado Heal (Only Demon)',
+    Text = 'Akaza BDA Demon (God Mode)',
     Default = false, -- Default value (true / false)
 })
 
@@ -179,6 +179,318 @@ end)
 
 -- This should print to the console: "My toggle state changed! New value: false"
 Toggles.Misc:SetValue(false)
+
+
+local RightGroupBox = Tabs.Main:AddRightGroupbox('⚔️ | Kill Aura | ⚔️')
+
+RightGroupBox:AddLabel('Select Weapon:')
+
+local WeaponSelector = {"Combat", "Sword", "Claw", "Scythe", "Fans"} -- Обновленный список оружия
+local selectedOption = WeaponSelector[1] -- Значение по умолчанию
+local isToggleEnabled = false -- Переменная для отслеживания состояния переключателя
+
+local SelectWeapon = RightGroupBox:AddDropdown('SelectWeapon', {
+    Values = { 'Combat', 'Sword', 'Claw', 'Scythe', 'Fans' },
+    Default = 1,
+    Multi = false,
+
+    Tooltip = 'This is a tooltip',
+})
+
+SelectWeapon:OnChanged(function(option)
+    selectedOption = option
+end)
+
+SelectWeapon:SetValue('Combat')
+
+
+RightGroupBox:AddLabel('/// KillAura ///')
+
+local KillAuraToggle = RightGroupBox:AddToggle('Killaura', {
+    Text = 'Kill Aura 1',
+    Default = false,
+})
+
+KillAuraToggle:OnChanged(function(t)
+    isToggleEnabled = t
+    if t then
+        local weapon
+
+        if selectedOption == 'Combat' then
+            weapon = "fist_combat"
+        elseif selectedOption == 'Sword' then
+            weapon = "Sword_Combat_Slash"
+        elseif selectedOption == 'Claw' then
+            weapon = "claw_Combat_Slash"
+        elseif selectedOption == 'Scythe' then
+            weapon = "Scythe_Combat_Slash"
+        elseif selectedOption == 'Fans' then
+            weapon = "fans_combat_slash"
+        end
+
+        local args1 = {
+            [1] = weapon,
+            [2] = game:GetService("Players").LocalPlayer,
+            [3] = game:GetService("Players").LocalPlayer.Character,
+            [4] = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart,
+            [5] = game:GetService("Players").LocalPlayer.Character.Humanoid,
+            [6] = 919,
+            [9] = 99999
+        }
+        local args2 = {
+            [1] = weapon,
+            [2] = game:GetService("Players").LocalPlayer,
+            [3] = game:GetService("Players").LocalPlayer.Character,
+            [4] = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart,
+            [5] = game:GetService("Players").LocalPlayer.Character.Humanoid,
+            [6] = 1,
+            [9] = 99999
+        }
+
+        local args3 = {
+            [1] = weapon,
+            [2] = game:GetService("Players").LocalPlayer,
+            [3] = game:GetService("Players").LocalPlayer.Character,
+            [4] = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart,
+            [5] = game:GetService("Players").LocalPlayer.Character.Humanoid,
+            [6] = 2,
+            [9] = 99999
+        }
+
+        local args4 = {
+            [1] = weapon,
+            [2] = game:GetService("Players").LocalPlayer,
+            [3] = game:GetService("Players").LocalPlayer.Character,
+            [4] = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart,
+            [5] = game:GetService("Players").LocalPlayer.Character.Humanoid,
+            [6] = 3,
+            [9] = 99999
+        }
+
+        local args5 = {
+            [1] = weapon,
+            [2] = game:GetService("Players").LocalPlayer,
+            [3] = game:GetService("Players").LocalPlayer.Character,
+            [4] = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart,
+            [5] = game:GetService("Players").LocalPlayer.Character.Humanoid,
+            [6] = 4,
+            [9] = 99999
+        }
+
+        while isToggleEnabled do
+            game:GetService("ReplicatedStorage").Remotes.To_Server.Handle_Initiate_S:FireServer(unpack(args2, 1, 9))
+            game:GetService("ReplicatedStorage").Remotes.To_Server.Handle_Initiate_S:FireServer(unpack(args3, 1, 9))
+            game:GetService("ReplicatedStorage").Remotes.To_Server.Handle_Initiate_S:FireServer(unpack(args4, 1, 9))
+            game:GetService("ReplicatedStorage").Remotes.To_Server.Handle_Initiate_S:FireServer(unpack(args5, 1, 9))
+            game:GetService("ReplicatedStorage").Remotes.To_Server.Handle_Initiate_S_:InvokeServer(unpack(args1, 1, 9))
+   
+            wait(1.3)
+        end
+    end
+end)
+
+KillAuraToggle:SetValue(false)
+
+
+local KillAura2Toggle = RightGroupBox:AddToggle('Killaura', {
+    Text = 'Kill Aura 2',
+    Default = false,
+})
+
+KillAura2Toggle:OnChanged(function(t)
+    isToggleEnabled = t -- Обновляем состояние переключателя
+    if t then
+     local weapon
+
+     if selectedOption == "Combat" then
+        weapon = "fist_combat"
+    elseif selectedOption == "Sword" then
+        weapon = "Sword_Combat_Slash"
+    elseif selectedOption == "Claw" then
+        weapon = "claw_Combat_Slash"
+    elseif selectedOption == "Scythe" then
+        weapon = "Scythe_Combat_Slash"
+    elseif selectedOption == "Fans" then
+        weapon = "fans_combat_slash"
+    end
+    
+    local oh1 = {
+        [1] = weapon,
+        [2] = game:GetService("Players").LocalPlayer,
+        [3] = game:GetService("Players").LocalPlayer.Character,
+        [4] = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart,
+        [5] = game:GetService("Players").LocalPlayer.Character.Humanoid,
+        [6] = 919,
+        [7] = "ground_slash"
+    }
+    local oh2 = {
+        [1] = weapon,
+        [2] = game:GetService("Players").LocalPlayer,
+        [3] = game:GetService("Players").LocalPlayer.Character,
+        [4] = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart,
+        [5] = game:GetService("Players").LocalPlayer.Character.Humanoid,
+        [6] = math.huge,
+        [7] = "ground_slash"
+    }
+
+    local oh3 = {
+        [1] = weapon,
+        [2] = game:GetService("Players").LocalPlayer,
+        [3] = game:GetService("Players").LocalPlayer.Character,
+        [4] = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart,
+        [5] = game:GetService("Players").LocalPlayer.Character.Humanoid,
+        [6] = 919,
+        [7] = "ground_slash"
+    }
+    local oh4 = {
+        [1] = weapon,
+        [2] = game:GetService("Players").LocalPlayer,
+        [3] = game:GetService("Players").LocalPlayer.Character,
+        [4] = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart,
+        [5] = game:GetService("Players").LocalPlayer.Character.Humanoid,
+        [6] = math.huge,
+        [7] = "ground_slash"
+    }
+
+    local oh5 = {
+        [1] = weapon,
+        [2] = game:GetService("Players").LocalPlayer,
+        [3] = game:GetService("Players").LocalPlayer.Character,
+        [4] = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart,
+        [5] = game:GetService("Players").LocalPlayer.Character.Humanoid,
+        [6] = 919,
+        [7] = "ground_slash"
+    }
+    local oh6 = {
+        [1] = weapon,
+        [2] = game:GetService("Players").LocalPlayer,
+        [3] = game:GetService("Players").LocalPlayer.Character,
+        [4] = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart,
+        [5] = game:GetService("Players").LocalPlayer.Character.Humanoid,
+        [6] = math.huge,
+        [7] = "ground_slash"
+    }
+
+    local oh7 = {
+        [1] = weapon,
+        [2] = game:GetService("Players").LocalPlayer,
+        [3] = game:GetService("Players").LocalPlayer.Character,
+        [4] = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart,
+        [5] = game:GetService("Players").LocalPlayer.Character.Humanoid,
+        [6] = 919,
+        [7] = "ground_slash"
+    }
+    local oh8 = {
+        [1] = weapon,
+        [2] = game:GetService("Players").LocalPlayer,
+        [3] = game:GetService("Players").LocalPlayer.Character,
+        [4] = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart,
+        [5] = game:GetService("Players").LocalPlayer.Character.Humanoid,
+        [6] = math.huge,
+        [7] = "ground_slash"
+    }
+
+    local oh9 = {
+        [1] = weapon,
+        [2] = game:GetService("Players").LocalPlayer,
+        [3] = game:GetService("Players").LocalPlayer.Character,
+        [4] = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart,
+        [5] = game:GetService("Players").LocalPlayer.Character.Humanoid,
+        [6] = 919,
+        [7] = "ground_slash"
+    }
+    local oh10 = {
+        [1] = weapon,
+        [2] = game:GetService("Players").LocalPlayer,
+        [3] = game:GetService("Players").LocalPlayer.Character,
+        [4] = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart,
+        [5] = game:GetService("Players").LocalPlayer.Character.Humanoid,
+        [6] = math.huge,
+        [7] = "ground_slash"
+    }
+
+    local oh11 = {
+        [1] = weapon,
+        [2] = game:GetService("Players").LocalPlayer,
+        [3] = game:GetService("Players").LocalPlayer.Character,
+        [4] = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart,
+        [5] = game:GetService("Players").LocalPlayer.Character.Humanoid,
+        [6] = 919,
+        [7] = "ground_slash"
+    }
+    local oh12 = {
+        [1] = weapon,
+        [2] = game:GetService("Players").LocalPlayer,
+        [3] = game:GetService("Players").LocalPlayer.Character,
+        [4] = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart,
+        [5] = game:GetService("Players").LocalPlayer.Character.Humanoid,
+        [6] = math.huge,
+        [7] = "ground_slash"
+    }
+
+    local oh13 = {
+        [1] = weapon,
+        [2] = game:GetService("Players").LocalPlayer,
+        [3] = game:GetService("Players").LocalPlayer.Character,
+        [4] = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart,
+        [5] = game:GetService("Players").LocalPlayer.Character.Humanoid,
+        [6] = 919,
+        [7] = "ground_slash"
+    }
+    local oh14 = {
+        [1] = weapon,
+        [2] = game:GetService("Players").LocalPlayer,
+        [3] = game:GetService("Players").LocalPlayer.Character,
+        [4] = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart,
+        [5] = game:GetService("Players").LocalPlayer.Character.Humanoid,
+        [6] = math.huge,
+        [7] = "ground_slash"
+    }
+
+    local oh15 = {
+        [1] = weapon,
+        [2] = game:GetService("Players").LocalPlayer,
+        [3] = game:GetService("Players").LocalPlayer.Character,
+        [4] = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart,
+        [5] = game:GetService("Players").LocalPlayer.Character.Humanoid,
+        [6] = 919,
+        [7] = "ground_slash"
+    }
+    local oh16 = {
+        [1] = weapon,
+        [2] = game:GetService("Players").LocalPlayer,
+        [3] = game:GetService("Players").LocalPlayer.Character,
+        [4] = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart,
+        [5] = game:GetService("Players").LocalPlayer.Character.Humanoid,
+        [6] = math.huge,
+        [7] = "ground_slash"
+    }
+
+    while isToggleEnabled do -- Добавляем проверку состояния переключателя в условие цикла
+        game:GetService("ReplicatedStorage").Remotes.To_Server.Handle_Initiate_S:FireServer(unpack(oh1, 1, 9))
+        game:GetService("ReplicatedStorage").Remotes.To_Server.Handle_Initiate_S:FireServer(unpack(oh2, 1, 9))
+        game:GetService("ReplicatedStorage").Remotes.To_Server.Handle_Initiate_S:FireServer(unpack(oh3, 1, 9))
+        game:GetService("ReplicatedStorage").Remotes.To_Server.Handle_Initiate_S:FireServer(unpack(oh4, 1, 9))
+        game:GetService("ReplicatedStorage").Remotes.To_Server.Handle_Initiate_S:FireServer(unpack(oh5, 1, 9))
+        game:GetService("ReplicatedStorage").Remotes.To_Server.Handle_Initiate_S:FireServer(unpack(oh6, 1, 9))
+        game:GetService("ReplicatedStorage").Remotes.To_Server.Handle_Initiate_S:FireServer(unpack(oh7, 1, 9))
+        game:GetService("ReplicatedStorage").Remotes.To_Server.Handle_Initiate_S:FireServer(unpack(oh8, 1, 9))
+        game:GetService("ReplicatedStorage").Remotes.To_Server.Handle_Initiate_S:FireServer(unpack(oh9, 1, 9))
+        game:GetService("ReplicatedStorage").Remotes.To_Server.Handle_Initiate_S:FireServer(unpack(oh10, 1, 9))
+        game:GetService("ReplicatedStorage").Remotes.To_Server.Handle_Initiate_S:FireServer(unpack(oh11, 1, 9))
+        game:GetService("ReplicatedStorage").Remotes.To_Server.Handle_Initiate_S:FireServer(unpack(oh12, 1, 9))
+        game:GetService("ReplicatedStorage").Remotes.To_Server.Handle_Initiate_S:FireServer(unpack(oh13, 1, 9))
+        game:GetService("ReplicatedStorage").Remotes.To_Server.Handle_Initiate_S:FireServer(unpack(oh14, 1, 9))
+        game:GetService("ReplicatedStorage").Remotes.To_Server.Handle_Initiate_S:FireServer(unpack(oh15, 1, 9))
+        game:GetService("ReplicatedStorage").Remotes.To_Server.Handle_Initiate_S:FireServer(unpack(oh16, 1, 9))
+
+        wait(2) -- Добавляем задержку в 1 секунду перед следующей итерацией цикла
+    end
+end
+end)
+
+-- This should print to the console: "My toggle state changed! New value: false"
+KillAura2Toggle:SetValue(false)
 
 
 -- Groupbox and Tabbox inherit the same functions
@@ -204,9 +516,6 @@ LeftGroupBox:AddToggle('Farming', {
     Default = false, -- Default value (true / false)
 })
 
-Toggles.Farming:OnChanged(function(value)
-    getgenv().AllBosses = value
-end)
 
 -- This should print to the console: "My toggle state changed! New value: false"
 Toggles.Farming:SetValue(false)
@@ -235,156 +544,6 @@ Toggles.Farming:SetValue(false)
             end
             end
             end)
-
-
- -- Farm Method
-spawn(function()
-    while wait() do
-        pcall(function()
-            SkillActive = AutoUseSkills and (FarmBoss and NearestMobs) or AutoUseSkills and (FarmQuest and NearestMobs) or AutoUseSkills and (FarmMob and NearestMobs) or AutoUseSkills and (AllBosses and NearestMobs)
-            if FarmMethod == "Above" then
-                FarmModes = CFrame.new(0,getgenv().Distance,0) * CFrame.Angles(math.rad(-90),0,0) 
-            elseif FarmMethod == "Below" then
-                FarmModes = CFrame.new(0,-getgenv().Distance,0) * CFrame.Angles(math.rad(90),0,0)
-            elseif FarmMethod == "Behind" then
-                FarmModes = CFrame.new(0,0,getgenv().Distance)
-            end
-            for i,v in pairs(LP.PlayerGui.MainGuis.Items.Scroll:GetChildren()) do
-                Insert = true
-                if v.ClassName == "Frame" and v.Name ~= "Health Elixir" and v.Name ~= "Health Regen Elixir" and v.Name ~= "Stamina Elixir" and v.Name ~= "Bandage" then
-                    for i,v2 in pairs(invTable) do if v2 == v.Name then Insert = false end end
-                    if Insert == true then table.insert(invTable, v.Name) end
-                end
-            end
-        end)
-    end
-end)
-
--- No Clip
-spawn(function()
-    game:GetService("RunService").Stepped:Connect(function()
-        if getgenv().AllBosses or TPtoVillage or TPtoTrainer or getgenv().GotoMuzan or FarmBoss then
-            for _, v in pairs(game:GetService("Players").LocalPlayer.Character:GetDescendants()) do
-                if v:IsA("BasePart") then
-                    v.CanCollide = false    
-                end
-                if v:IsA("Humanoid") then
-                    v:ChangeState(11)
-                end
-            end
-        end
-    end)
-end)
-
-local BossesTable = {"Slasher", "Nomay Bandit Boss", "Rengoku", "Inosuke","Renpeke","Muichiro Tokito","Enme","Swampy","Akeza"}
-local BossCFTable = {
-    ["Nomay Bandit Boss"] = CFrame.new(3519, 673, -1898),
-    ["Slasher"] = CFrame.new(950, 487, -1353),
-    Rengoku = CFrame.new(3651, 673, -345),
-    Inosuke = CFrame.new(1618, 300, -417),
-    Akaza = CFrame.new(1970, 556, -142),
-    Renpeke = CFrame.new(-1193, 601, -558),
-    ["Muichiro Tokito"] = CFrame.new(4431, 673, -440),
-    Enme = CFrame.new(1577, 483, -681),
-    Swampy = CFrame.new(-1301, 601, -283),
-}
-
-local LP = game.Players.LocalPlayer
-
-local function GetHuman()
-    local humanoid = LP.Character
-    humanoid = humanoid and (humanoid:FindFirstChild("Humanoid") or humanoid:FindFirstChildWhichIsA("Humanoid"))
-    return humanoid or workspace.CurrentCamera.CameraSubject
-end
-
-local GramxProjectFloat = tostring(math.random(0, 100000))
-local TweenFloatVelocity = Vector3.new(0,0,0)
-
-function CreateTweenFloat()
-    local BV = LP.Character.HumanoidRootPart:FindFirstChild(GramxProjectFloat) or Instance.new("BodyVelocity")
-    BV.Parent = LP.Character.HumanoidRootPart
-    BV.Name = GramxProjectFloat
-    BV.MaxForce = Vector3.new(100000, 100000, 100000)
-    BV.Velocity = TweenFloatVelocity
-end
-
-local function GetDistance(Endpoint)
-    if typeof(Endpoint) == "Instance" or typeof(Endpoint) == "CFrame" then
-        Endpoint = Vector3.new(Endpoint.Position.X, LP.Character.HumanoidRootPart.Position.Y, Endpoint.Position.Z)
-    end
-    local Magnitude = (Endpoint - LP.Character.HumanoidRootPart.Position).Magnitude
-    return Magnitude
-end
-
-local function Tween(Endpoint)
-    if typeof(Endpoint) == "Instance" then
-        Endpoint = Endpoint.CFrame
-    end
-    local TweenFunc = {}
-    local Distance = GetDistance(Endpoint)
-    local TweenInfo = game:GetService("TweenService"):Create(LP.Character.HumanoidRootPart, TweenInfo.new(Distance/getgenv().tweenspeed, Enum.EasingStyle.Linear), {CFrame = Endpoint * CFrame.fromAxisAngle(Vector3.new(1,0,0), math.rad(0))})
-    TweenInfo:Play()
-    function TweenFunc:Cancel()
-        TweenInfo:Cancel()
-        return false
-    end
-    if Distance <= 100 then
-        LP.Character.HumanoidRootPart.CFrame = Endpoint
-        TweenInfo:Cancel()
-        return false
-    end
-    return TweenFunc
-end
-
-local antifall3
-
--- AutoFarm All Bosses
-spawn(function()
-    while wait() do
-        pcall(function()
-            if getgenv().AllBosses then
-                if not LP.Character.HumanoidRootPart:FindFirstChild("BodyVelocity") then
-                    antifall3 = Instance.new("BodyVelocity", LP.Character.HumanoidRootPart)
-                    antifall3.Velocity = Vector3.new(0, 0, 0)
-                    antifall3.MaxForce = Vector3.new(9e9, 9e9, 9e9)
-                elseif LP.Character.HumanoidRootPart:FindFirstChild("BodyVelocity") then
-                    for i,v in pairs(game:GetService("Workspace").Mobs:GetDescendants()) do
-                        if table.find(BossesTable, v.Name) and v:IsA("Model") and v:FindFirstChild("Humanoid") then
-                            if v.Humanoid.Health > 0 then
-                                repeat wait()
-                                    local bossCFrame = BossCFTable[v.Name] -- Get the boss's CFrame from the BossCFTable
-                                    if GetDistance(bossCFrame) < 25 and GetDistance(bossCFrame) < 150 then
-                                        if TweenFa then
-                                            TweenFa:Cancel()
-                                            wait(0.1)
-                                        end
-                                        LP.Character.HumanoidRootPart.CFrame = bossCFrame
-                                    else
-                                        TweenFa = Tween(bossCFrame)
-                                    end
-                                    if v.Humanoid.Health > 0 and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and GetDistance(bossCFrame) < 10 then
-                                        NearestMobs = true
-                                    elseif v.Humanoid.Health <= 0 or not v:FindFirstChild("Humanoid") and GetDistance(bossCFrame) > 10 then
-                                        NearestMobs = false
-                                    end
-                                until not getgenv().AllBosses or not v.Parent or v.Humanoid.Health <= 0 or not v:IsDescendantOf(workspace)
-                                NearestMobs = false
-                            end
-                        end
-                    end
-                end
-            else
-                antifall3:Destroy()
-            end
-            if getgenv().AllBosses == false then
-                if TweenFa then
-                    TweenFa:Cancel()
-                end
-            end
-        end)
-    end
-end)
-
 
 -- Groupbox:AddButton
 -- Arguments: Text, Callback
