@@ -66,12 +66,8 @@ LeftGroupBox:AddToggle('Misc', {
     Default = false, -- Default value (true / false)
 })
 
-Toggles.Misc:OnChanged(function()
-    game:GetService("Players").LocalPlayer.PlayerScripts.Small_Scripts.Gameplay.Stamina.Disabled = true
-    wait(0.5)
-    game:GetService("Players").LocalPlayer.PlayerScripts.Small_Scripts.Gameplay.Stamina.Disabled = false
-    wait(0.5)
-    game:GetService("Players").LocalPlayer.PlayerScripts.Small_Scripts.Gameplay.Stamina.Disabled = true
+Toggles.Misc:OnChanged(function(t)
+    getgenv().InfStamina = t
 end)
 
 
@@ -83,16 +79,15 @@ LeftGroupBox:AddToggle('Misc', {
     Default = false, -- Default value (true / false)
 })
 
-Toggles.Misc:OnChanged(function()
-    game:GetService("Players").LocalPlayer.PlayerScripts.Small_Scripts.Gameplay.Breathing.Disabled = true
-    wait(0.5)
-    game:GetService("Players").LocalPlayer.PlayerScripts.Small_Scripts.Gameplay.Breathing.Disabled = false
-    wait(0.5)
-    game:GetService("Players").LocalPlayer.PlayerScripts.Small_Scripts.Gameplay.Breathing.Disabled = true
+Toggles.Misc:OnChanged(function(t)
+    getgenv().InfBreathing = t
 end)
 
 -- This should print to the console: "My toggle state changed! New value: false"
 Toggles.Misc:SetValue(false)
+
+
+LeftGroupBox:AddLabel('😈 | Demon Buffs | 😈')
 
 LeftGroupBox:AddToggle('Misc', {
     Text = 'Anti SunDamage (Only Demon)',
@@ -122,30 +117,6 @@ end)
 
 -- This should print to the console: "My toggle state changed! New value: false"
 Toggles.Misc:SetValue(false)
-
-LeftGroupBox:AddToggle('Misc', {
-    Text = 'Dmg Buff (All Race)',
-    Default = false, -- Default value (true / false)
-})
-
-local wardrumsbuffon = true
-local wardrumsbuffoff = false
-
-Toggles.Misc:OnChanged(function(t)
-    wardrumsbuffon = t
-    if not t then
-        wardrumsbuffon = false
-        wardrumsbuffoff = true
-    end
-    while wardrumsbuffon do
-    game:GetService("ReplicatedStorage").Remotes.war_Drums_remote:FireServer(wardrumsbuffon)
-    wait(2)
-    end
-end)
-
--- This should print to the console: "My toggle state changed! New value: false"
-Toggles.Misc:SetValue(false)
-
 
 local godmodeakazabda1 = "skil_ting_asd"
 local godmodeakazabda2 = game:GetService("Players").LocalPlayer
@@ -181,9 +152,82 @@ end)
 Toggles.Misc:SetValue(false)
 
 
+LeftGroupBox:AddLabel('🥷 | Human Buffs | 🥷')
+
+
+local thunderModeon = true
+local thunderModeoff = false
+
+LeftGroupBox:AddToggle('Misc', {
+    Text = 'Thunder Mode (Human Only)',
+    Default = true, -- Default value (true / false)
+})
+
+Toggles.Misc:OnChanged(function(t)
+    thunderModeon = t
+    if not t then
+        thunderModeon = false
+        thunderModeoff = true
+    end
+    thunderModeon do
+    game:GetService("ReplicatedStorage").Remotes.thundertang123:FireServer(thunderModeon)
+    end
+end)
+
+-- This should print to the console: "My toggle state changed! New value: false"
+Toggles.Misc:SetValue(false)
+
+LeftGroupBox:AddToggle('Misc', {
+    Text = 'Rengoku Mode (Human Only)',
+    Default = false, -- Default value (true / false)
+})
+
+local rengokuModeon = true
+local rengokuModeoff = false
+
+Toggles.Misc:OnChanged(function(t)
+    rengokuModeon = t
+    if not t then
+        rengokuModeon = false
+        rengokuModeoff = true
+    end
+    rengokuModeon do
+    game:GetService("ReplicatedStorage").Remotes.heart_ablaze_mode_remote:FireServer(rengokuModeon)
+    end
+end)
+
+-- This should print to the console: "My toggle state changed! New value: false"
+Toggles.Misc:SetValue(false)
+
+LeftGroupBox:AddLabel('💫 | All Race Buffs | 💫')
+
+LeftGroupBox:AddToggle('Misc', {
+    Text = 'Dmg Buff (All Race)',
+    Default = false, -- Default value (true / false)
+})
+
+local wardrumsbuffon = true
+local wardrumsbuffoff = false
+
+Toggles.Misc:OnChanged(function(t)
+    wardrumsbuffon = t
+    if not t then
+        wardrumsbuffon = false
+        wardrumsbuffoff = true
+    end
+    while wardrumsbuffon do
+    game:GetService("ReplicatedStorage").Remotes.war_Drums_remote:FireServer(wardrumsbuffon)
+    wait(2)
+    end
+end)
+
+-- This should print to the console: "My toggle state changed! New value: false"
+Toggles.Misc:SetValue(false)
+
+
 local RightGroupBox = Tabs.Main:AddRightGroupbox('⚔️ | Kill Aura | ⚔️')
 
-RightGroupBox:AddLabel('Select Weapon:')
+RightGroupBox:AddLabel('/// Select Weapon ///')
 
 local WeaponSelector = {"Combat", "Sword", "Claw", "Scythe", "Fans"} -- Обновленный список оружия
 local selectedOption = WeaponSelector[1] -- Значение по умолчанию
@@ -493,6 +537,104 @@ end)
 KillAura2Toggle:SetValue(false)
 
 
+local RightGroupBox = Tabs.Main:AddRightGroupbox('🎮 | Auto Skills | 🎮')
+
+local Autoskills = RightGroupBox:AddToggle('Autoskills', {
+    Text = 'Use Skills',
+    Default = false,
+})
+
+--Auto Skills
+Autoskills:OnChanged(function(t)
+    getgenv().AutoUseSkills = t
+end)
+
+Autoskills:SetValue(false)
+
+local AutoskillsZ = RightGroupBox:AddToggle('Autoskills', {
+    Text = 'Z',
+    Default = false,
+})
+
+AutoskillsZ:OnChanged(function(t)
+    getgenv().Z = t
+end)
+
+AutoskillsZ:SetValue(false)
+
+local AutoskillsX = RightGroupBox:AddToggle('Autoskills', {
+    Text = 'X',
+    Default = false,
+})
+
+AutoskillsX:OnChanged(function(t)
+    getgenv().X = t
+end)
+
+AutoskillsX:SetValue(false)
+
+local AutoskillsC = RightGroupBox:AddToggle('Autoskills', {
+    Text = 'C',
+    Default = false,
+})
+
+AutoskillsC:OnChanged(function(t)
+    getgenv().C = t
+end)
+
+AutoskillsC:SetValue(false)
+
+local AutoskillsV = RightGroupBox:AddToggle('Autoskills', {
+    Text = 'V',
+    Default = false,
+})
+
+AutoskillsV:OnChanged(function(t)
+    getgenv().V = t
+end)
+
+AutoskillsV:SetValue(false)
+
+local AutoskillsB = RightGroupBox:AddToggle('Autoskills', {
+    Text = 'B',
+    Default = false,
+})
+
+AutoskillsB:OnChanged(function(t)
+    getgenv().B = t
+end)
+
+AutoskillsB:SetValue(false)
+
+local AutoskillsN = RightGroupBox:AddToggle('Autoskills', {
+    Text = 'N',
+    Default = false,
+})
+
+AutoskillsN:OnChanged(function(t)
+    getgenv().N = t
+end)
+
+AutoskillsN:SetValue(false)
+
+
+local RightGroupBox = Tabs.Main:AddRightGroupbox('/// Progress Player ///')
+
+--Player
+local breathingProg = RightGroupBox:AddLabel("Breathing Progress : ".. math.floor((game:GetService("ReplicatedStorage")["Player_Data"][game.Players.LocalPlayer.Name].BreathingProgress[1].Value / game:GetService("ReplicatedStorage")["Player_Data"][game.Players.LocalPlayer.Name].BreathingProgress[2].Value) * 100) .. '%')
+local DemonProg = RightGroupBox:AddLabel("Demon Progress : ".. math.floor((game:GetService("ReplicatedStorage")["Player_Data"][game.Players.LocalPlayer.Name].DemonProgress[1].Value / game:GetService("ReplicatedStorage")["Player_Data"][game.Players.LocalPlayer.Name].DemonProgress[2].Value) * 100) .. '%')
+--Demon Update
+local function DemonProgRe()
+    DemonProg:Set("Demon Progress : " .. math.floor((game:GetService("ReplicatedStorage")["Player_Data"][game.Players.LocalPlayer.Name].DemonProgress[1].Value / game:GetService("ReplicatedStorage")["Player_Data"][game.Players.LocalPlayer.Name].DemonProgress[2].Value) * 100) .. '%')
+end
+game:GetService("ReplicatedStorage")["Player_Data"][game.Players.LocalPlayer.Name].DemonProgress[1].Changed:Connect(DemonProgRe)
+--Breathing Update
+local function BreathingRe()
+    breathingProg:Set("Breathing Progress : ".. math.floor((game:GetService("ReplicatedStorage")["Player_Data"][game.Players.LocalPlayer.Name].BreathingProgress[1].Value / game:GetService("ReplicatedStorage")["Player_Data"][game.Players.LocalPlayer.Name].BreathingProgress[2].Value) * 100) .. '%')
+end
+game:GetService("ReplicatedStorage")["Player_Data"][game.Players.LocalPlayer.Name].BreathingProgress[1].Changed:Connect(BreathingRe)
+
+
 -- Groupbox and Tabbox inherit the same functions
 -- except Tabboxes you have to call the functions on a tab (Tabbox:AddTab(name))
 local LeftGroupBox = Tabs.Main:AddLeftGroupbox('🤖 | Auto Farm | 🤖')
@@ -521,7 +663,30 @@ LeftGroupBox:AddToggle('Farming', {
 Toggles.Farming:SetValue(false)
 
 
-        --Collect Chest
+
+
+
+--Functions
+
+--Inf Breathing/Stam
+spawn(function()
+    while task.wait() do
+        if getgenv().InfStamina then
+            getrenv()._G.AddStamina("gpthebest", 50)
+        end
+    end
+end)
+
+spawn(function()
+    while task.wait() do
+        if getgenv().InfBreathing then
+            getrenv()._G.AddBreath("gpthebest", 50)
+        end
+    end
+end)
+
+
+--Collect Chest
 
         spawn(function()
             while task.wait() do
@@ -545,8 +710,104 @@ Toggles.Farming:SetValue(false)
             end
             end)
 
--- Groupbox:AddButton
--- Arguments: Text, Callback
+
+            --Skills
+spawn(function()
+    while task.wait() do
+        pcall(function()
+            if SkillActive then
+                if AutoUseSkills and getgenv().Z and not UsingSkill then
+                    for i = 1,7 do
+                        UsingSkill = true
+                        SkillBind("Z")
+                    end              
+                    UsingSkill = false
+                end
+            end
+        end)
+    end
+end)
+
+
+spawn(function()
+    while task.wait() do
+        pcall(function()
+            if SkillActive then
+                if AutoUseSkills and getgenv().X and not UsingSkill then
+                    for i = 1,7 do
+                        UsingSkill = true
+                        SkillBind("X")
+                    end              
+                    UsingSkill = false
+                end
+            end
+        end)
+    end
+end)
+
+spawn(function()
+    while task.wait() do
+        pcall(function()
+            if SkillActive then
+                if AutoUseSkills and getgenv().C and not UsingSkill then
+                    for i = 1,7 do
+                        UsingSkill = true
+                        SkillBind("C")
+                    end              
+                    UsingSkill = false
+                end
+            end
+        end)
+    end
+end)
+
+spawn(function()
+    while task.wait() do
+        pcall(function()
+            if SkillActive then
+                if AutoUseSkills and getgenv().V and not UsingSkill then
+                    for i = 1,7 do
+                        UsingSkill = true
+                        SkillBind("V")
+                    end              
+                    UsingSkill = false
+                end
+            end
+        end)
+    end
+end)
+
+spawn(function()
+    while task.wait() do
+        pcall(function()
+            if SkillActive then
+                if AutoUseSkills and getgenv().B and not UsingSkill then
+                    for i = 1,7 do
+                        UsingSkill = true
+                        SkillBind("B")
+                    end              
+                    UsingSkill = false
+                end
+            end
+        end)
+    end
+end)
+
+spawn(function()
+    while task.wait() do
+        pcall(function()
+            if SkillActive then
+                if AutoUseSkills and getgenv().N and not UsingSkill then
+                    for i = 1,7 do
+                        UsingSkill = true
+                        SkillBind("N")
+                    end              
+                    UsingSkill = false
+                end
+            end
+        end)
+    end
+end)
 
 local MyButton = LeftGroupBox:AddButton('Button', function()
     print('You clicked a button!')
