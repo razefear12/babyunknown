@@ -744,7 +744,7 @@ Options.KeyPicker:SetValue({ 'MB2', 'Toggle' }) -- Sets keybind to MB2, mode to 
 Library:SetWatermarkVisibility(true)
 
 -- Sets the watermark text
-Library:SetWatermark('This is a really long watermark to text the resizing')
+Library:SetWatermark('Hi, you gay <3')
 
 Library.KeybindFrame.Visible = false; -- todo: add a function for this
 
