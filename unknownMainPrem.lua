@@ -154,51 +154,6 @@ Toggles.Misc:SetValue(false)
 
 LeftGroupBox:AddLabel('🥷 | Human Buffs | 🥷')
 
-
-local thunderModeon = true
-local thunderModeoff = false
-
-LeftGroupBox:AddToggle('Misc', {
-    Text = 'Thunder Mode (Human Only)',
-    Default = true, -- Default value (true / false)
-})
-
-Toggles.Misc:OnChanged(function(t)
-    thunderModeon = t
-    if not t then
-        thunderModeon = false
-        thunderModeoff = true
-    end
-    thunderModeon do
-    game:GetService("ReplicatedStorage").Remotes.thundertang123:FireServer(thunderModeon)
-    end
-end)
-
--- This should print to the console: "My toggle state changed! New value: false"
-Toggles.Misc:SetValue(false)
-
-LeftGroupBox:AddToggle('Misc', {
-    Text = 'Rengoku Mode (Human Only)',
-    Default = false, -- Default value (true / false)
-})
-
-local rengokuModeon = true
-local rengokuModeoff = false
-
-Toggles.Misc:OnChanged(function(t)
-    rengokuModeon = t
-    if not t then
-        rengokuModeon = false
-        rengokuModeoff = true
-    end
-    rengokuModeon do
-    game:GetService("ReplicatedStorage").Remotes.heart_ablaze_mode_remote:FireServer(rengokuModeon)
-    end
-end)
-
--- This should print to the console: "My toggle state changed! New value: false"
-Toggles.Misc:SetValue(false)
-
 LeftGroupBox:AddLabel('💫 | All Race Buffs | 💫')
 
 LeftGroupBox:AddToggle('Misc', {
