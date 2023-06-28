@@ -2936,8 +2936,6 @@ function Library:Notify(Text, Time)
     end);
 end;
 
-local CornerRadius = 5; -- Adjust the value to change the corner radius
-
 function Library:CreateWindow(...)
     local Arguments = { ... }
     local Config = { AnchorPoint = Vector2.zero }
@@ -2974,9 +2972,6 @@ function Library:CreateWindow(...)
         Visible = false;
         ZIndex = 1;
         Parent = ScreenGui;
-        ClipsDescendants = true; -- Add this line to enable clipping
-        -- Add the following properties for rounded corners
-        BorderRadius = UDim.new(0, CornerRadius);
     });
 
     Library:MakeDraggable(Outer, 25);
@@ -2985,13 +2980,10 @@ function Library:CreateWindow(...)
         BackgroundColor3 = Library.MainColor;
         BorderColor3 = Library.AccentColor;
         BorderMode = Enum.BorderMode.Inset;
-        Position = UDim2.new(0, CornerRadius, 0, CornerRadius);
-        Size = UDim2.new(1, -2 * CornerRadius, 1, -2 * CornerRadius);
+        Position = UDim2.new(0, 1, 0, 1);
+        Size = UDim2.new(1, -2, 1, -2);
         ZIndex = 1;
         Parent = Outer;
-        -- Add the following properties for rounded corners
-        ClipsDescendants = true;
-        BorderRadius = UDim.new(0, CornerRadius);
     });
 
     Library:AddToRegistry(Inner, {
