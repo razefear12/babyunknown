@@ -2949,6 +2949,7 @@ function Library:CreateWindow(...)
         Config.AutoShow = Arguments[2] or false;
     end
 
+
     if type(Config.Title) ~= 'string' then Config.Title = 'No title' end
     if type(Config.TabPadding) ~= 'number' then Config.TabPadding = 0 end
     if type(Config.MenuFadeTime) ~= 'number' then Config.MenuFadeTime = 0.2 end
@@ -2967,17 +2968,25 @@ function Library:CreateWindow(...)
 
     local Outer = Library:Create('Frame', {
         AnchorPoint = Config.AnchorPoint,
-        BackgroundColor3 = Color3.new(0, 0, 0);
-        BorderSizePixel = 0;
+        BackgroundTransparency = 1,
+        BorderSizePixel = 0,
         Position = Config.Position,
         Size = Config.Size,
-        Visible = false;
-        ZIndex = 1;
-        Parent = ScreenGui;
-        ClipsDescendants = true; -- Add this line to enable clipping
-        -- Add the following properties for rounded corners
-        BorderRadius = UDim.new(0, CornerRadius);
-    });
+        Visible = false,
+        ZIndex = 1,
+        Parent = ScreenGui
+    })
+
+    local RoundedBackground = Library:Create('ImageLabel', {
+        BackgroundTransparency = 1,
+        Image = 'rbxassetid://6659112859', -- Rounded corner image ID
+        ImageColor3 = Color3.new(0, 0, 0),
+        ScaleType = Enum.ScaleType.Slice,
+        SliceCenter = Rect.new(Vector2.new(4, 4), Vector2.new(252, 252)),
+        Size = UDim2.new(1, 0, 1, 0),
+        ZIndex = 1,
+        Parent = Outer
+    })
 
     Library:MakeDraggable(Outer, 25);
 
