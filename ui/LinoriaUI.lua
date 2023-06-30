@@ -382,6 +382,7 @@ function Library:GiveSignal(Signal)
     table.insert(Library.Signals, Signal)
 end
 
+
 function Library:Unload()
     -- Unload all of the signals
     for Idx = #Library.Signals, 1, -1 do
@@ -1364,7 +1365,7 @@ do
             TextSize = 14;
             Text = Text;
             TextWrapped = DoesWrap or false,
-            TextXAlignment = Enum.TextXAlignment.Left;
+            TextXAlignment = Enum.TextXAlignment.Center;
             ZIndex = 5;
             Parent = Container;
         });
@@ -1650,7 +1651,7 @@ do
             Size = UDim2.new(1, 0, 0, 15);
             TextSize = 14;
             Text = Info.Text;
-            TextXAlignment = Enum.TextXAlignment.Left;
+            TextXAlignment = Enum.TextXAlignment.Center;
             ZIndex = 5;
             Parent = Container;
         });
@@ -2999,6 +3000,17 @@ function Library:CreateWindow(...)
         Parent = Inner;
     });
 
+    local MinimizeFrame = Library:Create('ImageButton', {
+        BackgroundTransparency = 1;
+        Image = "rbxassetid://3926307971";
+        ImageRectOffset = Vector2.new(884, 284);
+        ImageRectSize = Vector2.new(36, 36);
+        Position = UDim2.new(0.94, 0, 0, 0);
+        Size = UDim2.new(0, 25, 0, 25);
+        ZIndex = 1;
+        Parent = Inner;
+    });
+
     local MainSectionOuter = Library:Create('Frame', {
         BackgroundColor3 = Library.BackgroundColor;
         BorderColor3 = Library.OutlineColor;
@@ -3191,7 +3203,6 @@ function Library:CreateWindow(...)
             local BoxOuter = Library:Create('Frame', {
                 BackgroundColor3 = Library.BackgroundColor;
                 BorderColor3 = Library.OutlineColor;
-                BorderMode = Enum.BorderMode.Inset;
                 Size = UDim2.new(1, 0, 0, 507 + 2);
                 ZIndex = 2;
                 Parent = Info.Side == 1 and LeftSide or RightSide;
@@ -3205,7 +3216,6 @@ function Library:CreateWindow(...)
             local BoxInner = Library:Create('Frame', {
                 BackgroundColor3 = Library.BackgroundColor;
                 BorderColor3 = Color3.new(0, 0, 0);
-                -- BorderMode = Enum.BorderMode.Inset;
                 Size = UDim2.new(1, -2, 1, -2);
                 Position = UDim2.new(0, 1, 0, 1);
                 ZIndex = 4;
@@ -3233,7 +3243,7 @@ function Library:CreateWindow(...)
                 Position = UDim2.new(0, 4, 0, 2);
                 TextSize = 14;
                 Text = Info.Name;
-                TextXAlignment = Enum.TextXAlignment.Left;
+                TextXAlignment = Enum.TextXAlignment.Center;
                 ZIndex = 5;
                 Parent = BoxInner;
             });
@@ -3606,6 +3616,24 @@ function Library:CreateWindow(...)
         Fading = false;
     end
 
+    function Library.Mobile()
+        MainSectionOuter.Visible = not MainSectionOuter.Visible
+
+        if MainSectionOuter.Visible then
+            game:GetService("TweenService"):Create(
+                Outer,
+                TweenInfo.new(.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+                {Size = Config.Size}
+            ):Play()
+        else
+            game:GetService("TweenService"):Create(
+                Outer,
+                TweenInfo.new(.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),
+                {Size = UDim2.fromOffset(Config.Size.X.Offset, 30)}
+            ):Play()
+        end
+    end
+
     Library:GiveSignal(InputService.InputBegan:Connect(function(Input, Processed)
         if type(Library.ToggleKeybind) == 'table' and Library.ToggleKeybind.Type == 'KeyPicker' then
             if Input.UserInputType == Enum.UserInputType.Keyboard and Input.KeyCode.Name == Library.ToggleKeybind.Value then
@@ -3615,6 +3643,12 @@ function Library:CreateWindow(...)
             task.spawn(Library.Toggle)
         end
     end))
+
+    MinimizeFrame.InputBegan:Connect(function(Input)
+        if Input.UserInputType == Enum.UserInputType.MouseButton1 then
+            task.spawn(Library.Mobile)
+        end
+    end)
 
     if Config.AutoShow then task.spawn(Library.Toggle) end
 
