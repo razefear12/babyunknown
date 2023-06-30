@@ -2936,8 +2936,6 @@ function Library:Notify(Text, Time)
     end);
 end;
 
-local CornerRadius = 5; -- Adjust the value to change the corner radius
-
 function Library:CreateWindow(...)
     local Arguments = { ... }
     local Config = { AnchorPoint = Vector2.zero }
@@ -2948,7 +2946,6 @@ function Library:CreateWindow(...)
         Config.Title = Arguments[1]
         Config.AutoShow = Arguments[2] or false;
     end
-
 
     if type(Config.Title) ~= 'string' then Config.Title = 'No title' end
     if type(Config.TabPadding) ~= 'number' then Config.TabPadding = 0 end
@@ -2968,25 +2965,14 @@ function Library:CreateWindow(...)
 
     local Outer = Library:Create('Frame', {
         AnchorPoint = Config.AnchorPoint,
-        BackgroundTransparency = 1,
-        BorderSizePixel = 0,
+        BackgroundColor3 = Color3.new(0, 0, 0);
+        BorderSizePixel = 0;
         Position = Config.Position,
         Size = Config.Size,
-        Visible = false,
-        ZIndex = 1,
-        Parent = ScreenGui
-    })
-
-    local RoundedBackground = Library:Create('ImageLabel', {
-        BackgroundTransparency = 1,
-        Image = 'rbxassetid://6659112859', -- Rounded corner image ID
-        ImageColor3 = Color3.new(0, 0, 0),
-        ScaleType = Enum.ScaleType.Slice,
-        SliceCenter = Rect.new(Vector2.new(4, 4), Vector2.new(252, 252)),
-        Size = UDim2.new(1, 0, 1, 0),
-        ZIndex = 1,
-        Parent = Outer
-    })
+        Visible = false;
+        ZIndex = 1;
+        Parent = ScreenGui;
+    });
 
     Library:MakeDraggable(Outer, 25);
 
@@ -2994,13 +2980,10 @@ function Library:CreateWindow(...)
         BackgroundColor3 = Library.MainColor;
         BorderColor3 = Library.AccentColor;
         BorderMode = Enum.BorderMode.Inset;
-        Position = UDim2.new(0, CornerRadius, 0, CornerRadius);
-        Size = UDim2.new(1, -2 * CornerRadius, 1, -2 * CornerRadius);
+        Position = UDim2.new(0, 1, 0, 1);
+        Size = UDim2.new(1, -2, 1, -2);
         ZIndex = 1;
         Parent = Outer;
-        -- Add the following properties for rounded corners
-        ClipsDescendants = true;
-        BorderRadius = UDim.new(0, CornerRadius);
     });
 
     Library:AddToRegistry(Inner, {
