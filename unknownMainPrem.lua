@@ -17,7 +17,7 @@ local Window = Library:CreateWindow({
     -- Position and Size are also valid options here
     -- but you do not need to define them unless you are changing them :)
 
-    Title = 'UnknownHub | Project Slayers 👺 (Premium)',
+    Title = 'Project Slayers (Premium)',
     Center = true, 
     AutoShow = true,
 })
@@ -29,9 +29,26 @@ local Tabs = {
     ['UI Settings'] = Window:AddTab('UI Settings'),
 }
 
+
+local LeftGroupBox = Tabs.Main:AddLeftGroupbox('/// Progress Player ///')
+
+--Player
+local breathingProg = LeftGroupBox:AddLabel("Breathing Progress : ".. math.floor((game:GetService("ReplicatedStorage")["Player_Data"][game.Players.LocalPlayer.Name].BreathingProgress[1].Value / game:GetService("ReplicatedStorage")["Player_Data"][game.Players.LocalPlayer.Name].BreathingProgress[2].Value) * 100) .. '%')
+local DemonProg = LeftGroupBox:AddLabel("Demon Progress : ".. math.floor((game:GetService("ReplicatedStorage")["Player_Data"][game.Players.LocalPlayer.Name].DemonProgress[1].Value / game:GetService("ReplicatedStorage")["Player_Data"][game.Players.LocalPlayer.Name].DemonProgress[2].Value) * 100) .. '%')
+--Demon Update
+local function DemonProgRe()
+    DemonProg:Set("Demon Progress : " .. math.floor((game:GetService("ReplicatedStorage")["Player_Data"][game.Players.LocalPlayer.Name].DemonProgress[1].Value / game:GetService("ReplicatedStorage")["Player_Data"][game.Players.LocalPlayer.Name].DemonProgress[2].Value) * 100) .. '%')
+end
+game:GetService("ReplicatedStorage")["Player_Data"][game.Players.LocalPlayer.Name].DemonProgress[1].Changed:Connect(DemonProgRe)
+--Breathing Update
+local function BreathingRe()
+    breathingProg:Set("Breathing Progress : ".. math.floor((game:GetService("ReplicatedStorage")["Player_Data"][game.Players.LocalPlayer.Name].BreathingProgress[1].Value / game:GetService("ReplicatedStorage")["Player_Data"][game.Players.LocalPlayer.Name].BreathingProgress[2].Value) * 100) .. '%')
+end
+game:GetService("ReplicatedStorage")["Player_Data"][game.Players.LocalPlayer.Name].BreathingProgress[1].Changed:Connect(BreathingRe)
+
 -- Groupbox and Tabbox inherit the same functions
 -- except Tabboxes you have to call the functions on a tab (Tabbox:AddTab(name))
-local LeftGroupBox = Tabs.Main:AddLeftGroupbox('💪 | Player Buffs | 💪')
+local LeftGroupBox = Tabs.Main:AddLeftGroupbox('/// Player Buffs ///')
 
 
 -- Tabboxes are a tiny bit different, but here's a basic example:
@@ -85,9 +102,6 @@ end)
 
 -- This should print to the console: "My toggle state changed! New value: false"
 Toggles.Misc:SetValue(false)
-
-
-LeftGroupBox:AddLabel('😈 | Demon Buffs | 😈')
 
 LeftGroupBox:AddToggle('Misc', {
     Text = 'Anti SunDamage (Only Demon)',
@@ -151,11 +165,6 @@ end)
 -- This should print to the console: "My toggle state changed! New value: false"
 Toggles.Misc:SetValue(false)
 
-
-LeftGroupBox:AddLabel('🥷 | Human Buffs | 🥷')
-
-LeftGroupBox:AddLabel('💫 | All Race Buffs | 💫')
-
 LeftGroupBox:AddToggle('Misc', {
     Text = 'Dmg Buff (All Race)',
     Default = false, -- Default value (true / false)
@@ -193,7 +202,7 @@ local SelectWeapon = RightGroupBox:AddDropdown('SelectWeapon', {
     Default = 1,
     Multi = false,
 
-    Tooltip = 'This is a tooltip',
+    Tooltip = 'Select killaura weapon',
 })
 
 SelectWeapon:OnChanged(function(option)
@@ -208,6 +217,7 @@ RightGroupBox:AddLabel('/// KillAura ///')
 local KillAuraToggle = RightGroupBox:AddToggle('Killaura', {
     Text = 'Kill Aura 1',
     Default = false,
+    Tooltip = 'Kill aura | 1.25 second 5 hits',
 })
 
 KillAuraToggle:OnChanged(function(t)
@@ -283,7 +293,7 @@ KillAuraToggle:OnChanged(function(t)
             game:GetService("ReplicatedStorage").Remotes.To_Server.Handle_Initiate_S:FireServer(unpack(args5, 1, 9))
             game:GetService("ReplicatedStorage").Remotes.To_Server.Handle_Initiate_S_:InvokeServer(unpack(args1, 1, 9))
    
-            wait(1.3)
+            wait(1.25)
         end
     end
 end)
@@ -294,6 +304,7 @@ KillAuraToggle:SetValue(false)
 local KillAura2Toggle = RightGroupBox:AddToggle('Killaura', {
     Text = 'Kill Aura 2',
     Default = false,
+    Tooltip = 'Kill aura | 2.00 second 16 hits',
 })
 
 KillAura2Toggle:OnChanged(function(t)
@@ -573,23 +584,6 @@ end)
 AutoskillsN:SetValue(false)
 
 
-local RightGroupBox = Tabs.Main:AddRightGroupbox('/// Progress Player ///')
-
---Player
-local breathingProg = RightGroupBox:AddLabel("Breathing Progress : ".. math.floor((game:GetService("ReplicatedStorage")["Player_Data"][game.Players.LocalPlayer.Name].BreathingProgress[1].Value / game:GetService("ReplicatedStorage")["Player_Data"][game.Players.LocalPlayer.Name].BreathingProgress[2].Value) * 100) .. '%')
-local DemonProg = RightGroupBox:AddLabel("Demon Progress : ".. math.floor((game:GetService("ReplicatedStorage")["Player_Data"][game.Players.LocalPlayer.Name].DemonProgress[1].Value / game:GetService("ReplicatedStorage")["Player_Data"][game.Players.LocalPlayer.Name].DemonProgress[2].Value) * 100) .. '%')
---Demon Update
-local function DemonProgRe()
-    DemonProg:Set("Demon Progress : " .. math.floor((game:GetService("ReplicatedStorage")["Player_Data"][game.Players.LocalPlayer.Name].DemonProgress[1].Value / game:GetService("ReplicatedStorage")["Player_Data"][game.Players.LocalPlayer.Name].DemonProgress[2].Value) * 100) .. '%')
-end
-game:GetService("ReplicatedStorage")["Player_Data"][game.Players.LocalPlayer.Name].DemonProgress[1].Changed:Connect(DemonProgRe)
---Breathing Update
-local function BreathingRe()
-    breathingProg:Set("Breathing Progress : ".. math.floor((game:GetService("ReplicatedStorage")["Player_Data"][game.Players.LocalPlayer.Name].BreathingProgress[1].Value / game:GetService("ReplicatedStorage")["Player_Data"][game.Players.LocalPlayer.Name].BreathingProgress[2].Value) * 100) .. '%')
-end
-game:GetService("ReplicatedStorage")["Player_Data"][game.Players.LocalPlayer.Name].BreathingProgress[1].Changed:Connect(BreathingRe)
-
-
 -- Groupbox and Tabbox inherit the same functions
 -- except Tabboxes you have to call the functions on a tab (Tabbox:AddTab(name))
 local LeftGroupBox = Tabs.Main:AddLeftGroupbox('🤖 | Auto Farm | 🤖')
@@ -608,15 +602,104 @@ local Tab2 = TabBox:AddTab('Tab 2')
 
 -- Groupbox:AddToggle
 -- Arguments: Index, Options
-LeftGroupBox:AddToggle('Farming', {
+Toggles.Farming = LeftGroupBox:AddToggle('Farming', {
     Text = 'Auto All Bosses',
     Default = false, -- Default value (true / false)
 })
 
+Toggles.Farming:OnChanged(function(t)
+    isToggleMobsTweenEnabled = t -- Обновляем состояние переключателя
+    if t then
+        local currentMobFolder = nil -- Переменная для хранения текущей папки моба
+        local currentMobName = "" -- Переменная для хранения текущего названия моба
+        local attackingMob = nil -- Переменная для хранения ссылки на текущего атакуемого моба
+
+        local noclipE       = false
+        local antifall      = false
+
+        local function noclip()
+            for i, v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+                if v:IsA("BasePart") and v.CanCollide == true then
+                    v.CanCollide = false
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.Velocity = Vector3.new(0,0,0)
+                end
+            end
+        end
+
+        local function TweenToTarget(CFgo)
+            local tween_s = game:GetService("TweenService")
+            local info = TweenInfo.new((game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFgo.Position).Magnitude / 400, Enum.EasingStyle.Linear)
+            local tween = tween_s:Create(game.Players.LocalPlayer.Character.HumanoidRootPart, info, {CFrame = CFgo})
+        
+            if not game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyVelocity") then
+                antifall = Instance.new("BodyVelocity", game.Players.LocalPlayer.Character.HumanoidRootPart)
+                antifall.Velocity = Vector3.new(0,0,0)
+                noclipE = game:GetService("RunService").Stepped:Connect(noclip)
+                tween:Play()
+                noclip() -- Добавлен вызов функции noclip() после создания BodyVelocity
+            end
+        
+            tween.Completed:Connect(function()
+                antifall:Destroy()
+                noclipE:Disconnect()
+            end)
+        end
+
+        local mobsFolder = workspace.Mobs
+
+        local function AttackMob(mob)
+            -- Добавьте свой код атаки для моба
+        end
+
+        local function FarmMobs()
+            local mobFolder = mobsFolder:FindFirstChild(currentMobName)
+            if mobFolder and mobFolder:IsA("Folder") then
+                for _, mob in pairs(mobFolder:GetChildren()) do
+                    if mob:IsA("Model") then
+                        if mob:FindFirstChild("HumanoidRootPart") and mob:FindFirstChild("Humanoid") and mob.Humanoid.Health > 0 then
+                            if attackingMob and attackingMob.Parent and attackingMob.Parent.Name == currentMobName then
+                                -- Продолжаем атаку текущего моба
+                                TweenToTarget(attackingMob.HumanoidRootPart.CFrame)
+                                AttackMob(attackingMob)
+                            else
+                                -- Убиваем текущего моба и переходим к следующему
+                                attackingMob = mob
+                                TweenToTarget(mob.HumanoidRootPart.CFrame)
+                                AttackMob(mob)
+                                break -- Прерываем цикл после убийства текущего моба
+                            end
+                        end
+                    end
+                end
+            end
+        end
+
+        local plr = game.Players.LocalPlayer
+        local rs = game:GetService("RunService").RenderStepped
+        local Start = true
+
+        spawn(function()
+            while rs:wait() do
+                if Start then
+                    local newMobFolder = mobsFolder:FindFirstChild(currentMobName)
+                    if newMobFolder then
+                        FarmMobs()
+                    else
+                        -- Папка моба исчезла, нужно определить новую папку и имя моба
+                        local newMobFolder = mobsFolder:GetChildren()[1]
+                        if newMobFolder then
+                            currentMobName = newMobFolder.Name
+                            FarmMobs()
+                        end
+                    end
+                end
+            end
+        end)
+    end
+end)
 
 -- This should print to the console: "My toggle state changed! New value: false"
 Toggles.Farming:SetValue(false)
-
 
 
 
@@ -913,55 +996,6 @@ end)
 
 Options.ColorPicker:SetValueRGB(Color3.fromRGB(0, 255, 140))
 
---[[
-LeftGroupBox:AddLabel('Keybind'):AddKeyPicker('KeyPicker', {
-    -- SyncToggleState only works with toggles. 
-    -- It allows you to make a keybind which has its state synced with its parent toggle
-
-    -- Example: Keybind which you use to toggle flyhack, etc.
-    -- Changing the toggle disables the keybind state and toggling the keybind switches the toggle state
-
-    Default = 'MB2', -- String as the name of the keybind (MB1, MB2 for mouse buttons)  
-    SyncToggleState = false, 
-
-
-    -- You can define custom Modes but I have never had a use for it.
-    Mode = 'Toggle', -- Modes: Always, Toggle, Hold
-
-    Text = 'Auto lockpick safes', -- Text to display in the keybind menu
-    NoUI = false, -- Set to true if you want to hide from the Keybind menu,
-})
-
--- OnClick is only fired when you press the keybind and the mode is Toggle
--- Otherwise, you will have to use Keybind:GetState()
-Options.KeyPicker:OnClick(function()
-    print('Keybind clicked!', Options.KeyPicker.Value)
-end)
-
-task.spawn(function()
-    while true do
-        wait(1)
-
-        -- example for checking if a keybind is being pressed
-        local state = Options.KeyPicker:GetState()
-        if state then
-            print('KeyPicker is being held down')
-        end
-
-        if Library.Unloaded then break end
-    end
-end)
-
-Options.KeyPicker:SetValue({ 'MB2', 'Toggle' }) -- Sets keybind to MB2, mode to Hold
-]]
-
--- Library functions
--- Sets the watermark visibility
-Library:SetWatermarkVisibility(true)
-
--- Sets the watermark text
-Library:SetWatermark('Hi, you gay <3')
-
 Library.KeybindFrame.Visible = false; -- todo: add a function for this
 
 Library:OnUnload(function()
@@ -1009,3 +1043,35 @@ ThemeManager:ApplyToTab(Tabs['UI Settings'])
 
 -- You can use the SaveManager:LoadAutoloadConfig() to load a config 
 -- which has been marked to be one that auto loads!
+
+-- Library functions
+-- Sets the watermark visibility
+Library:SetWatermarkVisibility(true)
+
+-- Create a function to format time
+local function FormatTime(seconds)
+    local hours = math.floor(seconds / 3600)
+    local minutes = math.floor(seconds / 60) % 60
+    local remainingSeconds = seconds % 60
+
+    return string.format('%d seconds', remainingSeconds)
+end
+
+-- Create a function to update the timer
+local function UpdateTimer()
+    local timer = 0
+
+    while true do
+        -- Update the timer
+        timer = timer + 1
+
+        -- Update the watermark text with the timer value
+        Library:SetWatermark('UnknownHub\n' .. FormatTime(timer))
+
+        -- Wait for 1 second
+        wait(1)
+    end
+end
+
+-- Start updating the timer
+UpdateTimer()
